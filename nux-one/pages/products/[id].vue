@@ -1,6 +1,6 @@
 <template>
     <div>
-        //2nd way to use Meta tag:
+        <!-- 2nd way to use Meta tag(default): -->
         <Head>
             <Title>Nuxt One Products all | {{ product.title }}</Title>
             <Meta name="description" :content="product.description" />
