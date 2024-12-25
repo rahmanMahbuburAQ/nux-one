@@ -13,10 +13,10 @@
 
 
       <footer class="container mx-auto p-4 flex justify-between border-t-2">
-        <ul class="flex gap-4">
-            <li><NuxtLink to="/">Home</NuxtLink></li>
-            <li><NuxtLink to="/about">About</NuxtLink></li>
-            <li><NuxtLink to="/products">Products</NuxtLink></li>
+        <ul class="flex gap-12">
+            <li><NuxtLink to="/" class="font-bold text-md ">Home</NuxtLink></li>
+            <li><NuxtLink to="/about" class="font-bold text-md">About</NuxtLink></li>
+            <li><NuxtLink to="/products" class="font-bold text-md">Products</NuxtLink></li>
           </ul>
       </footer>
     </div>

@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center justify-center mt-12">
       <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Login88</h1>
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h1>
         <form @submit.prevent="handleLogin">
           <div class="mb-4">
             <label for="email" class="block mb-2 text-sm font-medium text-gray-600">
@@ -36,6 +36,16 @@
             Login
           </button>
         </form>
+  
+        <div class="mt-6">
+          <button
+            @click="handleGoogleSignIn"
+            class="w-full px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
+          >
+            Sign In with Google
+          </button>
+        </div>
+  
         <p class="mt-4 text-sm text-center text-gray-600">
           Don't have an account?
           <NuxtLink to="/register" class="text-blue-500 hover:underline">
@@ -48,6 +58,11 @@
   
   <script setup>
   import { ref } from 'vue';
+  import { useNuxtApp, useRouter } from '#app';
+  import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+  
+  const { $auth } = useNuxtApp(); // Access Firebase `auth` service globally
+  const router = useRouter();
   
   const email = ref('');
   const password = ref('');
@@ -59,22 +74,34 @@
         return;
       }
   
-      // Simulate a login API call
-      const response = await new Promise((resolve) =>
-        setTimeout(() => resolve({ success: true }), 1000)
-      );
+      // Login using Firebase email/password authentication
+      const userCredential = await signInWithEmailAndPassword($auth, email.value, password.value);
+      console.log('Logged in user:', userCredential.user);
   
-      if (response.success) {
-        alert('Login successful!');
-        router.push('/'); // Redirect to home page after login
-      } else {
-        alert('Invalid credentials.');
-      }
+      alert('Login successful!');
+      router.push('/'); // Redirect to home page after successful login
     } catch (error) {
-      console.error('Login error:', error);
-      alert('An error occurred. Please try again.');
+      console.error('Login error:', error.message);
+      alert(error.message || 'Invalid credentials. Please try again.');
+    }
+  };
+  
+  const handleGoogleSignIn = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup($auth, provider);
+  
+      // Access Google account details
+      console.log('Google Sign-In user:', result.user);
+  
+      alert('Google Sign-In successful!');
+      router.push('/'); // Redirect to home page after successful login
+    } catch (error) {
+      console.error('Google Sign-In error:', error.message);
+      alert(error.message || 'Google Sign-In failed. Please try again.');
     }
   };
   </script>
+  
   
   
