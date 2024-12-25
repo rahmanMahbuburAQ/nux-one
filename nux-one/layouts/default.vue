@@ -132,7 +132,7 @@ const logout = async () => {
 <style scoped>
 
 .router-link-exact-active{
-    color: royalblue;
+    color: green;
     font-weight: 700;
 }
 
